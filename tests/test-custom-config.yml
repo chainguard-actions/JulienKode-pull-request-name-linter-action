@@ -1,0 +1,19 @@
+name: Test custom commitlint configuration path
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Inject PR event payload for custom config test
+        run: |
+          cat "$GITHUB_WORKSPACE/tests/fixtures/events/custom-config-pr-event.json" > "$GITHUB_EVENT_PATH"
+      - name: Run action with custom config and valid PR title
+        id: action
+        uses: .
+        with:
+          configuration-path: ${{ github.workspace }}/tests/fixtures/commitlint/custom-commitlint.config.js
+      - name: Assert action passed with custom config
+        run: |
+          echo "PASS: action completed successfully with custom commitlint config"

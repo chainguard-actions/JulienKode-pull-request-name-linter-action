@@ -1,0 +1,19 @@
+name: Test valid PR title passes linting
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Inject PR event payload
+        run: |
+          cat "$GITHUB_WORKSPACE/tests/fixtures/events/valid-pr-event.json" > "$GITHUB_EVENT_PATH"
+      - name: Run action with valid PR title
+        id: action
+        uses: .
+        with:
+          configuration-path: ${{ github.workspace }}/tests/fixtures/commitlint/commitlint.config.js
+      - name: Assert action passed for valid title
+        run: |
+          echo "PASS: action completed successfully for valid PR title 'feat(valid): add new feature'"

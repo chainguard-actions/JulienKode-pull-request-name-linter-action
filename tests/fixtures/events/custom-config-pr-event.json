@@ -1,0 +1,9 @@
+{
+  "action": "opened",
+  "pull_request": {
+    "number": 3,
+    "title": "fix(auth): resolve login issue",
+    "head": {"ref": "fix-branch"},
+    "base": {"ref": "main"}
+  }
+}

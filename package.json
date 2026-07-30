@@ -1,0 +1,59 @@
+{
+  "name": "pull-request-commitlint-action",
+  "version": "20.1.0",
+  "private": true,
+  "description": "Run commitlint on pull request name.",
+  "packageManager": "pnpm@10.25.0",
+  "main": "lib/main.js",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts",
+    "lint": "eslint src/",
+    "bundle": "node esbuild.config.js",
+    "test": "vitest run",
+    "test:e2e": "vitest run --config vitest.e2e.config.ts",
+    "build:pack": "pnpm build && pnpm bundle",
+    "all": "pnpm build && pnpm test && pnpm bundle"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/actions/typescript-action.git"
+  },
+  "keywords": [
+    "actions",
+    "node",
+    "setup"
+  ],
+  "author": "Julien Karst",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "25.5.2",
+    "conventional-commits-parser": "6.4.0",
+    "esbuild": "0.28.0",
+    "eslint": "9.39.4",
+    "eslint-plugin-github": "6.0.0",
+    "eslint-plugin-prettier": "5.5.5",
+    "globals": "17.5.0",
+    "js-yaml": "4.1.1",
+    "prettier": "3.8.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.58.0",
+    "vitest": "4.0.18"
+  },
+  "dependencies": {
+    "@actions/core": "3.0.0",
+    "@actions/github": "9.0.0",
+    "@commitlint/lint": "20.5.3",
+    "@commitlint/load": "20.5.3",
+    "@commitlint/types": "20.5.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@commitlint/types": "20.5.0"
+    },
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}
