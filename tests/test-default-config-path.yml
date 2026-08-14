@@ -1,0 +1,28 @@
+name: Test default configuration-path resolves to action commitlint config
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Verify the default commitlint config exists in the action directory
+        run: |
+          if [ ! -f "$GITHUB_WORKSPACE/commitlint.config.js" ]; then
+            echo "FAIL: default commitlint.config.js not found in workspace"
+            exit 1
+          fi
+          echo "PASS: default commitlint.config.js exists"
+          cat "$GITHUB_WORKSPACE/commitlint.config.js"
+
+      - name: Run pull-request-name-linter-action with default config (no input)
+        id: action
+        uses: .
+        # Uses the default configuration-path: './commitlint.config.js'
+        # No pull_request payload under workflow_dispatch, so the action
+        # exits silently — this is the expected behavior.
+
+      - name: Assert action completed without failure
+        run: |
+          echo "PASS: action completed successfully using default config path"

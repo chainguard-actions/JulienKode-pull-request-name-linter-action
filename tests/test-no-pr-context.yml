@@ -1,0 +1,40 @@
+name: Test no PR context (graceful exit)
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_EVENT_NAME: push
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create push event payload (no pull_request key)
+        run: |
+          mkdir -p /tmp/event
+          cat > /tmp/event/push.json << 'EOF'
+          {
+            "ref": "refs/heads/main",
+            "repository": {
+              "name": "test-repo"
+            }
+          }
+          EOF
+          echo "GITHUB_EVENT_PATH=/tmp/event/push.json" >> $GITHUB_ENV
+
+      - name: Create commitlint config
+        run: |
+          cat > /tmp/commitlint.config.js << 'EOF'
+          module.exports = { rules: { "scope-case": [2, "always", "lower-case"] } };
+          EOF
+
+      - id: action
+        uses: .
+        with:
+          configuration-path: /tmp/commitlint.config.js
+
+      - name: Assert action exited gracefully
+        run: |
+          echo "Action exited gracefully when no pull_request context was present"
+          echo "PASS"

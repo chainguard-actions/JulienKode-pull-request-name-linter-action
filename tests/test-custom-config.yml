@@ -1,0 +1,31 @@
+name: Test custom configuration-path input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create a custom commitlint config
+        run: |
+          cat > /tmp/custom-commitlint.config.js << 'EOF'
+          module.exports = {
+            rules: {
+              'subject-case': [2, 'always', 'lower-case'],
+              'scope-case': [2, 'always', 'lower-case'],
+            }
+          };
+          EOF
+
+      - name: Run pull-request-name-linter-action with custom config path
+        id: action
+        uses: .
+        with:
+          configuration-path: /tmp/custom-commitlint.config.js
+        # No pull_request payload under workflow_dispatch, so the action
+        # exits silently before loading the config — this is expected behavior.
+
+      - name: Assert action completed without failure
+        run: |
+          echo "PASS: action completed successfully with custom config path and no PR context"

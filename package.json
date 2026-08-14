@@ -1,0 +1,54 @@
+{
+  "name": "pull-request-commitlint-action",
+  "version": "0.1.2",
+  "private": true,
+  "description": "Run commitlint on pull request name.",
+  "main": "lib/main.js",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts",
+    "lint": "eslint src/**/*.ts",
+    "pack": "ncc build",
+    "test": "jest",
+    "build:pack": "npm run build && npm run pack",
+    "all": "npm run build && npm run test && npm run format && npm run lint && npm run pack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/actions/typescript-action.git"
+  },
+  "keywords": [
+    "actions",
+    "node",
+    "setup"
+  ],
+  "author": "Julien Karst",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/types": "13.1.0",
+    "@types/jest": "26.0.24",
+    "@types/node": "12.20.23",
+    "@typescript-eslint/parser": "4.30.0",
+    "@vercel/ncc": "0.30.0",
+    "eslint": "7.32.0",
+    "eslint-plugin-github": "3.4.1",
+    "eslint-plugin-jest": "23.20.0",
+    "eslint-plugin-prettier": "3.3.1",
+    "jest": "25.5.4",
+    "jest-circus": "25.5.4",
+    "js-yaml": "3.14.1",
+    "prettier": "2.2.1",
+    "ts-jest": "25.4.0",
+    "typescript": "3.9.10"
+  },
+  "dependencies": {
+    "@actions/core": "1.2.6",
+    "@actions/github": "4.0.0",
+    "@commitlint/lint": "13.1.0",
+    "@commitlint/load": "13.1.0"
+  },
+  "resolutions": {
+    "import-fresh": "JulienKode/import-fresh#fix/issue-when-there-no-parent-module"
+  }
+}
