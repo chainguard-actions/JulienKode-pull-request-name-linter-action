@@ -1,8 +1,0 @@
-{
-  "pull_request": {
-    "number": 2,
-    "title": "feat(INVALID): uppercase scope",
-    "head": {"ref": "feature-branch"},
-    "base": {"ref": "main"}
-  }
-}
